@@ -1,0 +1,30 @@
+-- BANK TABLE
+CREATE TABLE Bank (
+    branch_id INT PRIMARY KEY,
+    branch_name VARCHAR(100),
+    branch_city VARCHAR(100)
+);
+
+-- ACCOUNT HOLDER TABLE
+CREATE TABLE Account_Holder (
+    acc_holder_id INT PRIMARY KEY,
+    account_no VARCHAR(20) UNIQUE,
+    acc_holder_name VARCHAR(100),
+    city VARCHAR(100),
+    contact VARCHAR(15),
+    date_of_account_created DATE,
+    account_status VARCHAR(20) CHECK (account_status IN ('active', 'terminated')),
+    account_type VARCHAR(20),
+    balance DECIMAL(10, 2)
+);
+
+-- LOAN TABLE
+CREATE TABLE Loan (
+    loan_no INT PRIMARY KEY,
+    branch_id INT,
+    acc_holder_id INT,
+    loan_amount DECIMAL(10, 2),
+    loan_type VARCHAR(50),
+    FOREIGN KEY (branch_id) REFERENCES Bank(branch_id),
+    FOREIGN KEY (acc_holder_id) REFERENCES Account_Holder(acc_holder_id)
+);
